@@ -14,29 +14,20 @@ import java.util.List;
 public class CompareTimeController {
 
     private static final int DISPLAY_HOURS = 100;
-    private final List<String> mHeaders;
     private final List<List<String>> mDisplayLists;
 
     public CompareTimeController(List<String> timeZoneIds) {
-        mHeaders = new ArrayList<String>();
         mDisplayLists = new ArrayList<List<String>>();
         generateTimeComparisons(timeZoneIds);
     }
 
     private void generateTimeComparisons(List<String> timeZoneIds) {
-        mHeaders.clear();
         mDisplayLists.clear();
 
         // Cache timezone objects
         DateTimeZone[] timeZones = new DateTimeZone[timeZoneIds.size()];
         for (int i = 0; i < timeZoneIds.size(); i++) {
             timeZones[i] = DateTimeZone.forID(timeZoneIds.get(i));
-        }
-
-        // generate headers
-        for (DateTimeZone dateTimeZone : timeZones) {
-            // TODO: display more than just Id
-            mHeaders.add(dateTimeZone.getID());
         }
 
         // Round current time down to the hour
@@ -67,9 +58,5 @@ public class CompareTimeController {
 
     public List<String> getItem(int position) {
         return mDisplayLists.get(position);
-    }
-
-    public List<String> getHeaders() {
-        return mHeaders;
     }
 }

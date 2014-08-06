@@ -5,4 +5,4 @@
     android:layout_height="match_parent"
     android:singleLine="true"
     android:textSize="@dimen/text_medium"
-    android:gravity="center" />
+    android:gravity="center"/>
