@@ -13,15 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_large"
-        android:hint="@string/filter" />
+        android:paddingLeft="@dimen/vertical_keyline"
+        android:paddingRight="@dimen/vertical_keyline"
+        android:hint="@string/filter"/>
 
     <ListView
         android:id="@+id/lst_timezones"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/txt_filter"
-        android:choiceMode="singleChoice"
-        android:textFilterEnabled="true" />
+        android:choiceMode="multipleChoice"
+        android:textFilterEnabled="true"
+        android:dividerHeight="0dp"
+        android:divider="@null"/>
 
     <Button
         android:id="@+id/btn_next"
@@ -30,7 +34,7 @@
         android:gravity="center"
         android:visibility="invisible"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"/>
 
     <Button
         android:id="@+id/btn_clear"
@@ -40,6 +44,6 @@
         android:gravity="center"
         android:visibility="invisible"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"/>
 
 </RelativeLayout>
