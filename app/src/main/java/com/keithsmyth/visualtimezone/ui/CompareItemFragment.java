@@ -1,11 +1,7 @@
 package com.keithsmyth.visualtimezone.ui;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +13,6 @@ import android.widget.TextView;
 import com.keithsmyth.visualtimezone.R;
 import com.keithsmyth.visualtimezone.adapter.CompareTimeAdapter;
 import com.keithsmyth.visualtimezone.controller.CompareTimeController;
-
-import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
@@ -38,8 +32,8 @@ public class CompareItemFragment extends Fragment {
     }
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Mandatory empty constructor for the fragment manager to instantiate the fragment (e.g. upon
+     * screen orientation changes).
      */
     public CompareItemFragment() {
     }
@@ -55,37 +49,44 @@ public class CompareItemFragment extends Fragment {
         generateListAdapter();
     }
 
+    private void generateListAdapter() {
+        // creates a controller and adapter for the listview
+        CompareTimeController mController = new CompareTimeController(mTimeZones);
+        mAdapter = new CompareTimeAdapter(mController);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compareitem, container, false);
 
         // current times layout
-        LinearLayout currentTimeLayout = (LinearLayout) view.findViewById(R.id.layout_current_time);
+        LinearLayout headerLayout = (LinearLayout) view.findViewById(R.id.layout_header);
         for (String timeZone : mTimeZones) {
-            createTextClock(currentTimeLayout, timeZone);
+            addHeaderItem(inflater, headerLayout, timeZone);
         }
 
         // times list view
         ListView listView = (ListView) view.findViewById(android.R.id.list);
         listView.setAdapter(mAdapter);
-        mAdapter.addHeaders(listView);
 
         return view;
     }
 
-    private void createTextClock(LinearLayout currentTimeLayout, String timeZone) {
-        // creates a TextClock widget for viewing the current time
-        TextClock textClock = new TextClock(getActivity());
-        textClock.setTimeZone(timeZone);
-        textClock.setGravity(Gravity.CENTER);
-        currentTimeLayout.addView(textClock,
-                new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-    }
+    private void addHeaderItem(LayoutInflater inflater, LinearLayout headerLayout,
+                               String timeZone) {
+        // populates current time and time zone name
 
-    private void generateListAdapter() {
-        // creates a controller and adapter for the listview
-        CompareTimeController mController = new CompareTimeController(mTimeZones);
-        mAdapter = new CompareTimeAdapter(mController);
+        View view = inflater.inflate(R.layout.item_compare_time_header_value, headerLayout, false);
+
+        TextClock textClock = (TextClock) view.findViewById(R.id.txc_current_time);
+        textClock.setTimeZone(timeZone);
+
+        TextView textView = (TextView) view.findViewById(R.id.txt_timezone_name);
+        textView.setText(timeZone);
+
+        headerLayout
+                .addView(view, new LinearLayout.LayoutParams(0,
+                        LinearLayout.LayoutParams.WRAP_CONTENT, 1));
     }
 }
