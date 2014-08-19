@@ -9,19 +9,21 @@ import android.widget.CheckedTextView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author keithsmyth
  */
 public class SelectTimeZoneAdapter extends ArrayAdapter<String> {
 
-    private final List<String> mSelectedTimeZones;
+    private final Set<String> mSelectedTimeZones;
 
     public SelectTimeZoneAdapter(Context context, int resource, int textViewResourceId,
                                  String[] objects) {
         super(context, resource, textViewResourceId, objects);
-        mSelectedTimeZones = new ArrayList<String>();
+        mSelectedTimeZones = new HashSet<String>();
     }
 
     @Override
@@ -34,7 +36,8 @@ public class SelectTimeZoneAdapter extends ArrayAdapter<String> {
     public void toggleTimeZone(int position) {
         if (isSelected(position)) {
             deSelectTimeZone(position);
-        } else {
+        }
+        else {
             selectTimeZone(position);
         }
     }
@@ -47,21 +50,17 @@ public class SelectTimeZoneAdapter extends ArrayAdapter<String> {
         mSelectedTimeZones.remove(getItem(position));
     }
 
-    public void restoreTimeZones(Collection<String> timeZones) {
-        clearSelectedTimeZones();
-        mSelectedTimeZones.addAll(timeZones);
-    }
-
-    public ArrayList<String> getSelectedTimeZones() {
-        return (ArrayList<String>) mSelectedTimeZones;
-    }
-
     public int getSelectedTimeZoneCount() {
         return mSelectedTimeZones.size();
     }
 
+    public ArrayList<String> getSelectedTimeZones() {
+        return new ArrayList<String>(mSelectedTimeZones);
+    }
+
     public void clearSelectedTimeZones() {
         mSelectedTimeZones.clear();
+        notifyDataSetInvalidated();
     }
 
     private boolean isSelected(int position) {

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.keithsmyth.visualtimezone.R;
 import com.keithsmyth.visualtimezone.Utils;
@@ -26,7 +27,6 @@ import java.util.Set;
  */
 public class SelectFragment extends Fragment {
 
-    public static final String ARG_TIME_ZONES = "timeZones";
     private SelectTimeZoneAdapter mSelectTimeZoneAdapter;
     private Button mNextButton;
     private Button mClearButton;
@@ -62,6 +62,8 @@ public class SelectFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // add clicked item
                 mSelectTimeZoneAdapter.toggleTimeZone(position);
+                // refresh views
+                mSelectTimeZoneAdapter.getView(position, view, timeZoneList);
                 updateButtonViews();
             }
         });
@@ -98,16 +100,10 @@ public class SelectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mSelectTimeZoneAdapter.clearSelectedTimeZones();
+                mSelectTimeZoneAdapter.notifyDataSetChanged();
                 updateButtonViews();
             }
         });
-
-        // restore state
-        if (savedInstanceState != null) {
-            //mTimeZoneAdapter.restoreTimeZones(savedInstanceState.getStringArrayList
-            // (ARG_TIME_ZONES));
-            //updateButtonViews();
-        }
 
         return rootView;
     }
@@ -116,12 +112,6 @@ public class SelectFragment extends Fragment {
     public void onAttach(Activity activity) {
         mCanStartCompare = (ICanStartCompare) activity;
         super.onAttach(activity);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        //outState.putStringArrayList(ARG_TIME_ZONES, mTimeZoneAdapter.getSelectedTimeZones());
-        super.onSaveInstanceState(outState);
     }
 
     @Override
