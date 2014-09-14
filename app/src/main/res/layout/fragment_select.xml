@@ -8,20 +8,10 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$PlaceholderFragment">
 
-    <EditText
-        android:id="@+id/txt_filter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_large"
-        android:paddingLeft="@dimen/vertical_keyline"
-        android:paddingRight="@dimen/vertical_keyline"
-        android:hint="@string/filter"/>
-
     <ListView
         android:id="@+id/lst_timezones"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/txt_filter"
         android:choiceMode="none"
         android:textFilterEnabled="true"
         android:dividerHeight="0dp"

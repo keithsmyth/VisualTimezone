@@ -3,16 +3,17 @@ package com.keithsmyth.visualtimezone.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.keithsmyth.visualtimezone.R;
 import com.keithsmyth.visualtimezone.Utils;
@@ -38,6 +39,7 @@ public class SelectFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         generateListAdapter();
     }
 
@@ -68,29 +70,12 @@ public class SelectFragment extends Fragment {
             }
         });
 
-        // filter
-        final EditText filterText = (EditText) rootView.findViewById(R.id.txt_filter);
-        filterText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                onFilterTextUpdated(filterText);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
         // next button
         mNextButton = (Button) rootView.findViewById(R.id.btn_next);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.closeKeyboard(getActivity(), filterText.getWindowToken());
+                Utils.closeKeyboard(getActivity(), v.getWindowToken());
                 next();
             }
         });
@@ -108,6 +93,37 @@ public class SelectFragment extends Fragment {
         return rootView;
     }
 
+    private SearchView mSearchView;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_filter, menu);
+        // Store reference to search view
+        mSearchView = (SearchView) menu.findItem(R.id.action_filter).getActionView();
+        if (mSearchView != null) {
+            mSearchView.setOnQueryTextListener(new OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    mSelectTimeZoneAdapter.getFilter().filter(s);
+                    return true;
+                }
+            });
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mSearchView != null && item.getItemId() == R.id.action_filter) {
+            mSearchView.setVisibility(View.VISIBLE);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onAttach(Activity activity) {
         mCanStartCompare = (ICanStartCompare) activity;
@@ -118,16 +134,6 @@ public class SelectFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateButtonViews();
-    }
-
-    private void onFilterTextUpdated(EditText editText) {
-        if (editText == null || mSelectTimeZoneAdapter == null) {
-            return;
-        }
-        // perform filtering on list
-        String filter = editText.getText().toString();
-        mSelectTimeZoneAdapter.getFilter().filter(filter);
-        // TODO: filter with contains instead of default startsWith
     }
 
     private void updateButtonViews() {
