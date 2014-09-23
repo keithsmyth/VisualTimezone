@@ -51,8 +51,7 @@ public class CompareTimeAdapter extends BaseAdapter {
         }
 
         // bind view
-        List<String> values = mController.getItem(position);
-        bindView(view, values);
+        bindView(view, position);
 
         return view;
     }
@@ -61,20 +60,21 @@ public class CompareTimeAdapter extends BaseAdapter {
      * Binds a standard view for comparison to the data
      *
      * @param view
-     * @param values
+     * @param position
      */
-    private void bindView(View view, List<String> values) {
+    private void bindView(View view, int position) {
         LinearLayout container = (LinearLayout) view.findViewById(R.id.layout_compare_time);
         container.removeAllViews();
+        container.setBackgroundColor(mController.getItemBackgroundColour(position));
 
+        List<String> values = mController.getItem(position);
         for (String value : values) {
             LayoutInflater inflater = LayoutInflater.from(view.getContext());
             TextView textView =
                     (TextView) inflater.inflate(R.layout.item_compare_time_value, container, false);
             textView.setText(value);
-            container
-                    .addView(textView, new LinearLayout.LayoutParams(0,
-                            LayoutParams.MATCH_PARENT, 1));
+            container.addView(textView,
+                    new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1));
         }
     }
 }
