@@ -2,6 +2,8 @@ package com.keithsmyth.visualtimezone.controller;
 
 import android.graphics.Color;
 
+import com.keithsmyth.visualtimezone.R;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -154,13 +156,13 @@ public class CompareTimeController {
 
         switch (hours) {
         case MEH:
-            return Color.GRAY;
+            return R.color.compare_meh;
         case OK:
-            return Color.BLUE;
+            return R.color.compare_ok;
         case GOOD:
-            return Color.GREEN;
+            return R.color.compare_good;
         default:
-            return Color.TRANSPARENT;
+            return R.color.compare_none;
         }
     }
 

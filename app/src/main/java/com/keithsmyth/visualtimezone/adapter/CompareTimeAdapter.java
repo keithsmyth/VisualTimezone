@@ -65,7 +65,7 @@ public class CompareTimeAdapter extends BaseAdapter {
     private void bindView(View view, int position) {
         LinearLayout container = (LinearLayout) view.findViewById(R.id.layout_compare_time);
         container.removeAllViews();
-        container.setBackgroundColor(mController.getItemBackgroundColour(position));
+        container.setBackgroundResource(mController.getItemBackgroundColour(position));
 
         List<String> values = mController.getItem(position);
         for (String value : values) {
