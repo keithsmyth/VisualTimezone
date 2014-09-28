@@ -2,6 +2,7 @@ package com.keithsmyth.visualtimezone.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
@@ -28,10 +29,13 @@ import java.util.Set;
  */
 public class SelectFragment extends Fragment {
 
+    private static final String SEARCH_KEY = "SearchKey";
+
     private SelectTimeZoneAdapter mSelectTimeZoneAdapter;
     private Button mNextButton;
     private Button mClearButton;
     private ICanStartCompare mCanStartCompare;
+    private SearchView mSearchView;
 
     public SelectFragment() {
     }
@@ -93,8 +97,6 @@ public class SelectFragment extends Fragment {
         return rootView;
     }
 
-    private SearchView mSearchView;
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_filter, menu);
@@ -146,5 +148,19 @@ public class SelectFragment extends Fragment {
 
     private void next() {
         mCanStartCompare.startCompare(mSelectTimeZoneAdapter.getSelectedTimeZones());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SEARCH_KEY, String.valueOf(mSearchView.getQuery()));
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            mSearchView.setQuery(savedInstanceState.getString(SEARCH_KEY, ""), true);
+        }
     }
 }
