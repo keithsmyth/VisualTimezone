@@ -1,10 +1,9 @@
 package com.keithsmyth.visualtimezone.controller;
 
-import android.graphics.Color;
-
 import com.keithsmyth.visualtimezone.R;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -119,6 +118,12 @@ public class CompareTimeController {
         private static BusinessHours isBusinessHours(String dateTimeString,
                                                      DateTimeFormatter dateTimeFormatter) {
             DateTime dateTime = DateTime.parse(dateTimeString, dateTimeFormatter);
+
+            // Weekends
+            int day = dateTime.getDayOfWeek();
+            if (day > DateTimeConstants.FRIDAY) {
+                return BusinessHours.NOPE;
+            }
 
             int minute = dateTime.getMinuteOfDay();
 
