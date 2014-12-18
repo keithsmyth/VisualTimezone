@@ -1,8 +1,8 @@
 package com.keithsmyth.visualtimezone.ui;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.LayoutInflater;
@@ -24,7 +24,7 @@ import org.joda.time.DateTimeZone;
 import java.util.Set;
 
 /**
- * Created by keithsmyth on 26/07/2014.
+ * @author keithsmyth
  */
 public class SelectFragment extends Fragment {
 
@@ -34,6 +34,7 @@ public class SelectFragment extends Fragment {
     private ICanStartCompare mCanStartCompare;
 
     public SelectFragment() {
+        // Mandatory empty constructor
     }
 
     @Override
@@ -46,9 +47,7 @@ public class SelectFragment extends Fragment {
     private void generateListAdapter() {
         Set<String> timeZoneSet = DateTimeZone.getAvailableIDs();
         String[] timeZoneArray = timeZoneSet.toArray(new String[timeZoneSet.size()]);
-        mSelectTimeZoneAdapter =
-                new SelectTimeZoneAdapter(getActivity(), R.layout.item_timezone_row,
-                        R.id.txt_timezone_name, timeZoneArray);
+        mSelectTimeZoneAdapter = new SelectTimeZoneAdapter(getActivity(), timeZoneArray);
     }
 
     @Override

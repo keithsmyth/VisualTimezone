@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by keithsmyth on 31/07/2014.
+ * @author keithsmyth
  */
 public class CompareTimeController {
 
@@ -22,7 +22,7 @@ public class CompareTimeController {
     private DateTimeFormatter mDateTimeFormatter;
 
     public CompareTimeController(List<String> timeZoneIds) {
-        mDisplayLists = new ArrayList<List<String>>();
+        mDisplayLists = new ArrayList<>();
         generateTimeComparisons(timeZoneIds);
     }
 
@@ -48,7 +48,7 @@ public class CompareTimeController {
 
         // Iterate over the next n hours
         for (int i = 0; i < DISPLAY_HOURS; i++) {
-            List<String> displayList = new ArrayList<String>();
+            List<String> displayList = new ArrayList<>();
             for (DateTimeZone dateTimeZone : timeZones) {
                 displayList.add(dateTime.withZone(dateTimeZone).toString(mDateTimeFormatter));
             }

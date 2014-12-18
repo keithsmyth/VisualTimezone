@@ -1,7 +1,5 @@
 <resources>
     <!-- Default layout margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="vertical_keyline">56dp</dimen>
 
     <!--buttons-->
@@ -12,6 +10,4 @@
     <dimen name="text_small">14sp</dimen>
     <dimen name="text_medium">18sp</dimen>
     <dimen name="text_large">22sp</dimen>
-
-
 </resources>

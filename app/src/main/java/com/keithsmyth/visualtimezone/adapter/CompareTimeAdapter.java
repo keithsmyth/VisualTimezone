@@ -15,7 +15,7 @@ import com.keithsmyth.visualtimezone.controller.CompareTimeController;
 import java.util.List;
 
 /**
- * Created by keithsmyth on 31/07/2014.
+ * @author keithsmyth
  */
 public class CompareTimeAdapter extends BaseAdapter {
 

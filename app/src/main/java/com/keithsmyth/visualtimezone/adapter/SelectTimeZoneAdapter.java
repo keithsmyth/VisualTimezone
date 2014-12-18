@@ -1,16 +1,16 @@
 package com.keithsmyth.visualtimezone.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.Filter;
 
+import com.keithsmyth.visualtimezone.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,11 +27,10 @@ public class SelectTimeZoneAdapter extends ArrayAdapter<String> {
     private final Object mLock = new Object();
     private Filter mFilter;
 
-    public SelectTimeZoneAdapter(Context context, int resource, int textViewResourceId,
-                                 String[] objects) {
-        super(context, resource, textViewResourceId, objects);
-        mSelectedTimeZones = new HashSet<String>();
-        mObjects = new ArrayList<String>(Arrays.asList(objects));
+    public SelectTimeZoneAdapter(Context context, String[] objects) {
+        super(context, R.layout.item_timezone_row, R.id.txt_timezone_name, objects);
+        mSelectedTimeZones = new HashSet<>();
+        mObjects = new ArrayList<>(Arrays.asList(objects));
     }
 
     @Override
@@ -73,7 +72,7 @@ public class SelectTimeZoneAdapter extends ArrayAdapter<String> {
     }
 
     public ArrayList<String> getSelectedTimeZones() {
-        return new ArrayList<String>(mSelectedTimeZones);
+        return new ArrayList<>(mSelectedTimeZones);
     }
 
     public void clearSelectedTimeZones() {
@@ -101,23 +100,24 @@ public class SelectTimeZoneAdapter extends ArrayAdapter<String> {
 
             if (mOriginalValues == null) {
                 synchronized (mLock) {
-                    mOriginalValues = new ArrayList<String>(mObjects);
+                    mOriginalValues = new ArrayList<>(mObjects);
                 }
             }
 
             if (prefix == null || prefix.length() == 0) {
                 ArrayList<String> list;
                 synchronized (mLock) {
-                    list = new ArrayList<String>(mOriginalValues);
+                    list = new ArrayList<>(mOriginalValues);
                 }
                 results.values = list;
                 results.count = list.size();
-            } else {
+            }
+            else {
                 String prefixString = prefix.toString().toLowerCase();
 
                 ArrayList<String> values;
                 synchronized (mLock) {
-                    values = new ArrayList<String>(mOriginalValues);
+                    values = new ArrayList<>(mOriginalValues);
                 }
 
                 final ArrayList<String> newValues = new ArrayList<String>();
@@ -155,7 +155,8 @@ public class SelectTimeZoneAdapter extends ArrayAdapter<String> {
             mObjects = (List<String>) results.values;
             if (results.count > 0) {
                 notifyDataSetChanged();
-            } else {
+            }
+            else {
                 notifyDataSetInvalidated();
             }
         }

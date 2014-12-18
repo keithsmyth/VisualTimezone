@@ -1,15 +1,18 @@
 package com.keithsmyth.visualtimezone.ui;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 
 import com.keithsmyth.visualtimezone.R;
 
 import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity implements ICanStartCompare {
+/**
+ * @author keithsmyth
+ */
+public class MainActivity extends Activity implements ICanStartCompare {
 
     private static final String ARG_TIME_ZONES = "timeZones";
     private static final String BACK_STACK = "back-stack";
@@ -22,7 +25,8 @@ public class MainActivity extends ActionBarActivity implements ICanStartCompare 
         if (savedInstanceState == null) {
             mTimeZones = null;
             startFragment(new SelectFragment(), false);
-        } else {
+        }
+        else {
             mTimeZones = savedInstanceState.getStringArrayList(ARG_TIME_ZONES);
         }
     }
@@ -41,7 +45,7 @@ public class MainActivity extends ActionBarActivity implements ICanStartCompare 
     }
 
     private void startFragment(Fragment fragment, boolean addToBackStack) {
-        FragmentTransaction transaction = getSupportFragmentManager()
+        FragmentTransaction transaction = getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, fragment);
         if (addToBackStack) {

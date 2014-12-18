@@ -1,7 +1,7 @@
 package com.keithsmyth.visualtimezone.ui;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,9 @@ import com.keithsmyth.visualtimezone.controller.CompareTimeController;
 
 import java.util.ArrayList;
 
+/**
+ * @author keithsmyth
+ */
 public class CompareItemFragment extends Fragment {
 
     private static final String ARG_TIME_ZONES = "timeZones";
@@ -31,11 +34,8 @@ public class CompareItemFragment extends Fragment {
         return fragment;
     }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the fragment (e.g. upon
-     * screen orientation changes).
-     */
     public CompareItemFragment() {
+        // Mandatory empty constructor
     }
 
     @Override

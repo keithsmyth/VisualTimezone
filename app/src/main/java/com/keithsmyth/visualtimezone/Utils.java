@@ -5,7 +5,7 @@ import android.os.IBinder;
 import android.view.inputmethod.InputMethodManager;
 
 /**
- * Created by keithsmyth on 30/07/2014.
+ * @author keithsmyth
  */
 public class Utils {
     /**
